@@ -1,25 +1,24 @@
-import asyncio
-import json
 from unittest.mock import AsyncMock
 
 import pytest
 from httpx import Request
 
-import main
-from main import (
+from src import main
+from src.main import (
     SearchResultSchema,
     Selector,
     collect_data,
     get_headers,
     get_page_html,
+    get_search_results,
     httpx,
     parse_languages,
     parse_search_details,
     parse_search_page,
-    proxies,
-    select_proxy,
+    select_random_proxy,
+    shared_proxy,
 )
-from schema import SearchSchema
+from src.schema import SearchSchema
 
 
 def test_get_headers():
@@ -32,7 +31,7 @@ def test_get_headers():
 @pytest.mark.asyncio
 async def test_get_page_html(monkeypatch):
     # Mock proxies
-    proxies.set(None)
+    shared_proxy.set(None)
 
     async def mock_get(*args, **kwargs):
         return httpx.Response(200, text="Mocked page HTML")
@@ -75,7 +74,7 @@ async def test_parse_search_details(monkeypatch, mock_detail_page_html):
     request = Request(method="GET", url="https://example.com/detail")
     mock_response = httpx.Response(200, text=mock_detail_page_html, request=request)
     async_mock = AsyncMock(return_value=mock_response)
-    monkeypatch.setattr("main.get_page_html", async_mock)
+    monkeypatch.setattr("src.main.get_page_html", async_mock)
 
     result: SearchResultSchema = await parse_search_details(
         ["https://example.com/detail"]
@@ -98,11 +97,10 @@ async def test_parse_search_details(monkeypatch, mock_detail_page_html):
 
 @pytest.mark.asyncio
 async def test_collect_data(monkeypatch, search_page_result, mock_detail_page_html):
-    # Mock parse_search_page to return predefined URLs
     def mock_parse_search_page(*args, **kwargs):
         return search_page_result
 
-    monkeypatch.setattr("main.parse_search_page", mock_parse_search_page)
+    monkeypatch.setattr("src.main.parse_search_page", mock_parse_search_page)
 
     # Prepare the mock response and patch the get_page_html function
     request = Request(method="GET", url="https://example.com/detail")
@@ -112,44 +110,41 @@ async def test_collect_data(monkeypatch, search_page_result, mock_detail_page_ht
 
     result = await collect_data("https://example.com/search?q=openstack")
 
-    print(result)
-
     assert isinstance(
         result, SearchResultSchema
-    ), "The result is not an instance of SearchResultSchema."
+    ), "The result is not an instance of SearcthjrhResultSchema"
     assert len(result.root) == len(
         search_page_result
-    ), "The number of results is incorrect."
+    ), "The number of results is incorrect"
 
 
 @pytest.mark.asyncio
-async def test_get_search_results(monkeypatch, parsed_data):
-    mock_result = SearchResultSchema(parsed_data)
+async def test_get_search_results_with_mocked_collect_data(monkeypatch, parsed_data):
+    async def mock_collect_data(*args, **kwargs):
+        return SearchResultSchema(root=parsed_data)
 
-    async def mock_asyncio_gather(*args, **kwargs):
-        return (mock_result,)
+    monkeypatch.setattr("src.main.collect_data", mock_collect_data)
 
-    monkeypatch.setattr(asyncio, "gather", mock_asyncio_gather)
+    scraping_data = SearchSchema(keywords=["test"], type="Repositories", proxies=[])
+    result = await get_search_results(scraping_data)
 
-    test_search_schema = SearchSchema(keywords=["test"], type="Repositories")
-    result = await main.get_search_results(test_search_schema)
+    assert isinstance(result, str), "The result should be a JSON string."
 
-    assert isinstance(result, str), "The result is not a string."
-    assert len(result) > 0, "The result string is empty."
+    # Convert the result from JSON string back to SearchResultSchema
+    # for easier comparison
+    result = SearchResultSchema.model_validate_json(result)
 
-    data = json.loads(result)
-    assert isinstance(data, list), "The result is not a list."
-    assert len(data) == len(parsed_data), "The number of results is incorrect."
-    assert all(
-        isinstance(item, dict) for item in data
-    ), "Not all items in the result are dictionaries."
+    assert isinstance(
+        result, SearchResultSchema
+    ), "The result should be an instance of SearchResultSchema."
+    assert len(result.root) == 2, "The number of results is incorrect."
 
 
-def test_select_proxy(mock_proxies):
+def test_select_proxy(mock_proxies, mock_shared_proxy):
     # Mock the proxies
-    proxies.set(mock_proxies)
+    shared_proxy.set(mock_shared_proxy)
 
-    result = select_proxy()
+    result = shared_proxy.get()
     assert result is not None, "Expected a dictionary, got None"
     assert set(result.keys()) == {
         "http://",
@@ -164,16 +159,14 @@ def test_select_proxy(mock_proxies):
 
 
 def test_select_proxy_without_proxy_list_passed(monkeypatch):
-    proxies.set(None)
-    result = select_proxy()
+    shared_proxy.set(None)
+    result = shared_proxy.get()
     assert result is None, "Expected None for an empty proxy list"
 
 
-def test_select_proxy_on_random(mock_proxies):
-    proxies.set(mock_proxies)
-
+def test_select_random_proxy(mock_proxies):
     # Call select_proxy() multiple times to check for rando of selection
-    selections = [select_proxy() for _ in range(10)]
+    selections = [select_random_proxy(mock_proxies) for _ in range(10)]
 
     # Extract just the HTTP or HTTPS proxy URLs for simplicity
     http_selections = [selection["http://"] for selection in selections if selection]
@@ -182,3 +175,8 @@ def test_select_proxy_on_random(mock_proxies):
     assert not all(
         proxy == http_selections[0] for proxy in http_selections
     ), "Proxies selected are not randomized"
+
+
+def test_select_random_proxy_on_empty_list():
+    result = select_random_proxy([])
+    assert result is None, "Random proxy selection should return None on an empty list"

@@ -1,6 +1,6 @@
 import pytest
 
-from schema import Extra, SearchDataSchema
+from src.schema import Extra, SearchDataSchema
 from tests.html import detail_page, search_page
 
 
@@ -66,3 +66,11 @@ def mock_proxies():
         "https://proxy9.com:80",
         "https://proxy10.com:80",
     ]
+
+
+@pytest.fixture
+def mock_shared_proxy():
+    return {
+        "http://": "https://proxy1.com:80",
+        "https://": "https://proxy1.com:80",
+    }

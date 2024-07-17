@@ -89,17 +89,50 @@ cd n-ix-technical-task
 pip install -r requirements.txt
 
 # run the script
-python main.py
+python run.py
 
 # or using Makefile
 make run
 ```
 
-### Output
+
+### Output without proxy
 ```shell
+proxy: None url: https://github.com/search?q=openstack+OR+nova+OR+css&type=repositories
+proxy: None url: https://github.com/openstack/nova
+proxy: None url: https://github.com/int32bit/openstack-workflow
+proxy: None url: https://github.com/openstack/python-novaclient
+proxy: None url: https://github.com/crowbar/barclamp-nova
+proxy: None url: https://github.com/openstack/openstack
+proxy: None url: https://github.com/crowbar/barclamp-nova_dashboard
+proxy: None url: https://github.com/docker-archive/openstack-docker
+proxy: None url: https://github.com/ruby-openstack/ruby-openstack
+proxy: None url: https://github.com/openstack/puppet-nova
+proxy: None url: https://github.com/fog/fog-openstack
 [
     {
-        "url": "https://github.com/openstack/openstack",
+        "url": "https://github.com/openstack/nova",
+        "extra": {
+            "owner": "openstack",
+            "language_stats": {
+                "Python": 97.7,
+                "Smarty": 2.2
+            }
+        }
+    },
+    {
+        "url": "https://github.com/int32bit/openstack-workflow",
+        "extra": {
+            "owner": "int32bit",
+            "language_stats": {
+                "Python": 91.7,
+                "Shell": 6.2,
+                "Makefile": 2.1
+            }
+        }
+    },
+    {
+        "url": "https://github.com/openstack/python-novaclient",
         "extra": {
             "owner": "openstack",
             "language_stats": {
@@ -107,151 +140,84 @@ make run
             }
         }
     },
+
+    ....
+    ....
+    ....
+    
     {
-        "url": "https://github.com/JiYou/openstack",
+        "url": "https://github.com/fog/fog-openstack",
         "extra": {
-            "owner": "JiYou",
+            "owner": "fog",
             "language_stats": {
-                "Python": 92.9,
-                "JavaScript": 2.5,
-                "Smarty": 1.3,
-                "Shell": 1.3,
-                "HTML": 0.8,
-                "CSS": 0.7
+                "Ruby": 100.0
             }
         }
-    },
+    }
+]
+```
+
+### Output with random proxy from the list  
+```shell
+proxy: {'http://': 'http://5.75.200.249:80', 'https://': 'http://5.75.200.249:80'} url: https://github.com/search?q=openstack+OR+nova+OR+css&type=repositories
+proxy: {'http://': 'http://5.75.200.249:80', 'https://': 'http://5.75.200.249:80'} url: https://github.com/openstack/nova
+proxy: {'http://': 'http://5.75.200.249:80', 'https://': 'http://5.75.200.249:80'} url: https://github.com/int32bit/openstack-workflow
+proxy: {'http://': 'http://5.75.200.249:80', 'https://': 'http://5.75.200.249:80'} url: https://github.com/openstack/python-novaclient
+proxy: {'http://': 'http://5.75.200.249:80', 'https://': 'http://5.75.200.249:80'} url: https://github.com/crowbar/barclamp-nova
+proxy: {'http://': 'http://5.75.200.249:80', 'https://': 'http://5.75.200.249:80'} url: https://github.com/openstack/openstack
+proxy: {'http://': 'http://5.75.200.249:80', 'https://': 'http://5.75.200.249:80'} url: https://github.com/crowbar/barclamp-nova_dashboard
+proxy: {'http://': 'http://5.75.200.249:80', 'https://': 'http://5.75.200.249:80'} url: https://github.com/docker-archive/openstack-docker
+proxy: {'http://': 'http://5.75.200.249:80', 'https://': 'http://5.75.200.249:80'} url: https://github.com/ruby-openstack/ruby-openstack
+proxy: {'http://': 'http://5.75.200.249:80', 'https://': 'http://5.75.200.249:80'} url: https://github.com/openstack/puppet-nova
+proxy: {'http://': 'http://5.75.200.249:80', 'https://': 'http://5.75.200.249:80'} url: https://github.com/fog/fog-openstack
+[
     {
-        "url": "https://github.com/ContainX/openstack4j",
-        "extra": {
-            "owner": "ContainX",
-            "language_stats": {
-                "Java": 97.0,
-                "Groovy": 3.0
-            }
-        }
-    },
-    {
-        "url": "https://github.com/openstack/openstack-ansible",
+        "url": "https://github.com/openstack/nova",
         "extra": {
             "owner": "openstack",
             "language_stats": {
-                "Python": 61.5,
-                "Shell": 26.7,
-                "Jinja": 11.7,
-                "Smarty": 0.1
+                "Python": 97.7,
+                "Smarty": 2.2
             }
         }
     },
-    
-    ....
-    ....
-    ....
-    ....
-    
     {
-        "url": "https://github.com/gustavoguanabara/html-css",
+        "url": "https://github.com/int32bit/openstack-workflow",
         "extra": {
-            "owner": "gustavoguanabara",
+            "owner": "int32bit",
             "language_stats": {
-                "HTML": 98.4,
-                "CSS": 1.6
+                "Python": 91.7,
+                "Shell": 6.2,
+                "Makefile": 2.1
             }
         }
     },
     {
-        "url": "https://github.com/AllThingsSmitty/css-protips",
+        "url": "https://github.com/openstack/python-novaclient",
         "extra": {
-            "owner": "AllThingsSmitty",
-            "language_stats": {}
+            "owner": "openstack",
+            "language_stats": {
+                "Python": 100.0
+            }
+        }
+    },
+    
+    ....
+    ....
+    ....
+    ....
+    
+    {
+        "url": "https://github.com/fog/fog-openstack",
+        "extra": {
+            "owner": "fog",
+            "language_stats": {
+                "Ruby": 100.0
+            }
         }
     }
 ]
 
-```
-
-### Without Proxies
-```shell
-proxy: None url: https://github.com/search?q=openstack&type=Repositories
-proxy: None url: https://github.com/openstack/openstack
-proxy: None url: https://github.com/JiYou/openstack
-proxy: None url: https://github.com/ContainX/openstack4j
-proxy: None url: https://github.com/openstack/openstack-ansible
-proxy: None url: https://github.com/php-opencloud/openstack
-proxy: None url: https://github.com/kubernetes/cloud-provider-openstack
-proxy: None url: https://github.com/terraform-provider-openstack/terraform-provider-openstack
-proxy: None url: https://github.com/openstack/openstack-manuals
-proxy: None url: https://github.com/openstack/openstack-helm
-proxy: None url: https://github.com/openstack/openstacksdk
-[
-    {
-        "url": "https://github.com/openstack/openstack",
-        "extra": {
-            "owner": "openstack",
-            "language_stats": {
-                "Python": 100.0
-            }
-        }
-    },
-    {
-        "url": "https://github.com/JiYou/openstack",
-        "extra": {
-            "owner": "JiYou",
-            "language_stats": {
-                "Python": 92.9,
-                "JavaScript": 2.5,
-                "Smarty": 1.3,
-                "Shell": 1.3,
-                "HTML": 0.8,
-                "CSS": 0.7
-            }
-        }
-    },
-    ....
-    ....
-    ....
-```
-
-### With Proxies rotation
-```shell
-proxy: {'http://': 'http://35.185.196.38:3128', 'https://': 'http://35.185.196.38:3128'} url: https://github.com/search?q=openstack&type=Repositories
-proxy: {'http://': 'http://35.185.196.38:3128', 'https://': 'http://35.185.196.38:3128'} url: https://github.com/openstack/openstack
-proxy: {'http://': 'http://155.94.241.133:3128', 'https://': 'http://155.94.241.133:3128'} url: https://github.com/JiYou/openstack
-proxy: {'http://': 'http://134.209.29.120:3128', 'https://': 'http://134.209.29.120:3128'} url: https://github.com/ContainX/openstack4j
-proxy: {'http://': 'http://50.174.145.15:80', 'https://': 'http://50.174.145.15:80'} url: https://github.com/openstack/openstack-ansible
-proxy: {'http://': 'http://155.94.241.133:3128', 'https://': 'http://155.94.241.133:3128'} url: https://github.com/php-opencloud/openstack
-proxy: {'http://': 'http://134.209.29.120:3128', 'https://': 'http://134.209.29.120:3128'} url: https://github.com/kubernetes/cloud-provider-openstack
-proxy: {'http://': 'http://198.44.255.3:80', 'https://': 'http://198.44.255.3:80'} url: https://github.com/terraform-provider-openstack/terraform-provider-openstack
-proxy: {'http://': 'http://50.174.145.15:80', 'https://': 'http://50.174.145.15:80'} url: https://github.com/openstack/openstack-manuals
-proxy: {'http://': 'http://35.185.196.38:3128', 'https://': 'http://35.185.196.38:3128'} url: https://github.com/openstack/openstack-helm
-proxy: {'http://': 'http://198.44.255.3:80', 'https://': 'http://198.44.255.3:80'} url: https://github.com/openstack/openstacksdk
-[
-    {
-        "url": "https://github.com/openstack/openstack",
-        "extra": {
-            "owner": "openstack",
-            "language_stats": {
-                "Python": 100.0
-            }
-        }
-    },
-    {
-        "url": "https://github.com/JiYou/openstack",
-        "extra": {
-            "owner": "JiYou",
-            "language_stats": {
-                "Python": 92.9,
-                "JavaScript": 2.5,
-                "Smarty": 1.3,
-                "Shell": 1.3,
-                "HTML": 0.8,
-                "CSS": 0.7
-            }
-        }
-    },
-    ....
-    ....
-    ....
 ```
 
 ### Unit Testing
@@ -264,25 +230,28 @@ make test
 
 ### Output
 ```shell
-========================================================================== test session starts ===================================================
-platform linux -- Python 3.11.5, pytest-8.2.2, pluggy-1.5.0 -- /home/******/python/versions/3.11.5/envs/technical-task/bin/python
-rootdir: /home/***********/projects/technical_task
+========================================================================== test session starts ===========================================================================
+platform linux -- Python 3.11.5, pytest-8.2.2, pluggy-1.5.0 -- /home/******/.pyenv/versions/3.11.5/envs/technical-task/bin/python
+cachedir: .pytest_cache
+rootdir: /home/******/PycharmProjects/nix_pythonProject
 plugins: asyncio-0.23.7, anyio-4.4.0
 asyncio: mode=Mode.STRICT
-collected 10 items                                                                                                                                                        
+collected 12 items                                                                                                                                                       
 
-tests/test_main.py::test_get_headers PASSED                                                                                                  [ 10%]
-tests/test_main.py::test_get_page_html PASSED                                                                                                [ 20%]
-tests/test_main.py::test_parse_search_page PASSED                                                                                            [ 30%]
-tests/test_main.py::test_parse_languages PASSED                                                                                              [ 40%]
-tests/test_main.py::test_parse_search_details PASSED                                                                                         [ 50%]
-tests/test_main.py::test_collect_data PASSED                                                                                                 [ 60%]
-tests/test_main.py::test_get_search_results PASSED                                                                                           [ 70%]
-tests/test_main.py::test_select_proxy PASSED                                                                                                 [ 80%]
-tests/test_main.py::test_select_proxy_without_proxy_list_passed PASSED                                                                       [ 90%]
-tests/test_main.py::test_select_proxy_on_random PASSED                                                                                       [100%]
+tests/test_main.py::test_get_headers PASSED                                                                                                                        [  8%]
+tests/test_main.py::test_get_page_html PASSED                                                                                                                      [ 16%]
+tests/test_main.py::test_parse_search_page PASSED                                                                                                                  [ 25%]
+tests/test_main.py::test_parse_languages PASSED                                                                                                                    [ 33%]
+tests/test_main.py::test_parse_search_details PASSED                                                                                                               [ 41%]
+tests/test_main.py::test_collect_data PASSED                                                                                                                       [ 50%]
+tests/test_main.py::test_get_search_results_with_mocked_collect_data PASSED                                                                                        [ 58%]
+tests/test_main.py::test_select_proxy PASSED                                                                                                                       [ 66%]
+tests/test_main.py::test_select_proxy_without_proxy_list_passed PASSED                                                                                             [ 75%]
+tests/test_main.py::test_select_random_proxy PASSED                                                                                                                [ 83%]
+tests/test_main.py::test_select_random_proxy_on_empty_list PASSED                                                                                                  [ 91%]
+tests/test_schema.py::test_search_schema PASSED                                                                                                                    [100%]
 
-===================================================================================================== 10 passed in 0.27s ==========================
+=========================================================================== 12 passed in 0.24s ===========================================================================
 ```
 
 ### Coverage
@@ -297,36 +266,42 @@ make coverage
 
 ### Output
 ```shell
-========================================================================== test session starts ====================================================
-platform linux -- Python 3.11.5, pytest-8.2.2, pluggy-1.5.0 -- /home/******/python/versions/3.11.5/envs/technical-task/bin/python
-
-rootdir: /home/***********/projects/technical_task
+========================================================================== test session starts ===========================================================================
+platform linux -- Python 3.11.5, pytest-8.2.2, pluggy-1.5.0 -- /home/******/.pyenv/versions/3.11.5/envs/technical-task/bin/python
+cachedir: .pytest_cache
+rootdir: /home/******/PycharmProjects/nix_pythonProject
 plugins: asyncio-0.23.7, anyio-4.4.0
 asyncio: mode=Mode.STRICT
-collected 10 items                                                                                                                                                        
+collected 12 items                                                                                                                                                       
 
-tests/test_main.py::test_get_headers PASSED                                                                                                  [ 10%]
-tests/test_main.py::test_get_page_html PASSED                                                                                                [ 20%]
-tests/test_main.py::test_parse_search_page PASSED                                                                                            [ 30%]
-tests/test_main.py::test_parse_languages PASSED                                                                                              [ 40%]
-tests/test_main.py::test_parse_search_details PASSED                                                                                         [ 50%]
-tests/test_main.py::test_collect_data PASSED                                                                                                 [ 60%]
-tests/test_main.py::test_get_search_results PASSED                                                                                           [ 70%]
-tests/test_main.py::test_select_proxy PASSED                                                                                                 [ 80%]
-tests/test_main.py::test_select_proxy_without_proxy_list_passed PASSED                                                                       [ 90%]
-tests/test_main.py::test_select_proxy_on_random PASSED                                                                                       [100%]
+tests/test_main.py::test_get_headers PASSED                                                                                                                        [  8%]
+tests/test_main.py::test_get_page_html PASSED                                                                                                                      [ 16%]
+tests/test_main.py::test_parse_search_page PASSED                                                                                                                  [ 25%]
+tests/test_main.py::test_parse_languages PASSED                                                                                                                    [ 33%]
+tests/test_main.py::test_parse_search_details PASSED                                                                                                               [ 41%]
+tests/test_main.py::test_collect_data PASSED                                                                                                                       [ 50%]
+tests/test_main.py::test_get_search_results_with_mocked_collect_data PASSED                                                                                        [ 58%]
+tests/test_main.py::test_select_proxy PASSED                                                                                                                       [ 66%]
+tests/test_main.py::test_select_proxy_without_proxy_list_passed PASSED                                                                                             [ 75%]
+tests/test_main.py::test_select_random_proxy PASSED                                                                                                                [ 83%]
+tests/test_main.py::test_select_random_proxy_on_empty_list PASSED                                                                                                  [ 91%]
+tests/test_schema.py::test_search_schema PASSED                                                                                                                    [100%]
 
-===================================================================================================== 10 passed in 0.27s ==========================
+=========================================================================== 12 passed in 0.27s ===========================================================================
 Name                        Stmts   Miss  Cover   Missing
 ---------------------------------------------------------
-main.py                        70      0   100%
-schema.py                      14      0   100%
+src/__init__.py                 0      0   100%
+src/main.py                    65      0   100%
+src/schema.py                  16      0   100%
+src/settings.py                 3      0   100%
+src/xpath.py                    5      0   100%
 tests/__init__.py               0      0   100%
-tests/conftest.py              18      0   100%
+tests/conftest.py              21      0   100%
 tests/html/__init__.py          0      0   100%
 tests/html/detail_page.py       1      0   100%
 tests/html/search_page.py       1      0   100%
-tests/test_main.py             87      0   100%
+tests/test_main.py             83      0   100%
+tests/test_schema.py            9      0   100%
 ---------------------------------------------------------
-TOTAL                         191      0   100%
+TOTAL                         204      0   100%
 ```
