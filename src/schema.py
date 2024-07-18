@@ -8,6 +8,12 @@ class SearchSchema(BaseModel):
     proxies: list[str] | None = None
     type: Literal["Repositories", "Issues", "Wikis"]
 
+    def get_query_params(self) -> dict[str, str]:
+        return {
+            "q": " OR ".join(self.keywords),
+            "type": self.type.lower(),
+        }
+
 
 class Extra(BaseModel):
     owner: str

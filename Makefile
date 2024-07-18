@@ -1,5 +1,5 @@
 run:
-	python main.py
+	python run.py
 
 test:
 	pytest -v tests/
